@@ -1,0 +1,94 @@
+<div class="container px-3 max-w-5xl mx-auto mt-8">
+  <div>
+    <!--  -->
+    <% for( let index = 0; index < data.length; index++ ) { %>
+    <!--  -->
+    <% const result = data[index].data %>
+    <!--  -->
+    <div
+      class="flex items-center justify-between p-4 bg-slate-700 text-white font-medium gap-y-4"
+    >
+      <h1><%= data[index].lang %>:</h1>
+      <div class="flex items-center gap-x-4 text-white">
+        <div
+          onclick="handleCopy(
+           <%= JSON.stringify(result)  %>
+        )"
+          class="flex items-center gap-x-1 cursor-pointer hover:-translate-y-1 active:scale-90 active:opacity-60 duration-300 select-none"
+        >
+          <p>Copy</p>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="#fff"
+            viewBox="0 0 256 256"
+          >
+            <path
+              d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"
+            ></path>
+          </svg>
+        </div>
+        <div class="cursor-pointer resize-btn duration-300">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="#fff"
+            viewBox="0 0 256 256"
+          >
+            <path
+              d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="bg-gray-900 text-white p-4">
+      <div class="pl-4 flex flex-col gap-y-1">
+        {
+        <ul class="pl-8 json-<%= index %>">
+          <!--  -->
+          <% Object.entries(result).forEach(function([key, value], index) { %>
+          <li>
+            <!--  -->
+            <span class="text-sky-600"><%= JSON.stringify(key) %>: </span>
+            <span class="text-yellow-600"><%= JSON.stringify(value) %></span>
+            <!--  -->
+            <% if (index < Object.keys(result).length - 1) { %>,<% } %>
+          </li>
+          <% }); %>
+        </ul>
+        }
+      </div>
+    </div>
+    <!--  -->
+    <% } %>
+  </div>
+</div>
+
+<script>
+  const handleCopy = (data) => {
+    navigator.clipboard
+      .writeText(JSON.stringify(data))
+      .then(() => {
+        console.log("Text copied to clipboard");
+        alert("Copy success!");
+      })
+      .catch((err) => {
+        console.error("Unable to copy text to clipboard", err);
+        alert("Copy error!");
+      });
+  };
+
+  const resizeButtons = document.getElementsByClassName("resize-btn");
+
+  for (let index = 0; index < resizeButtons.length; index++) {
+    const element = resizeButtons[index];
+    element.addEventListener("click", () => {
+      element.classList.toggle("-rolate-90");
+      document.querySelector(`.json-${index}`).classList.toggle("hidden");
+    });
+  }
+</script>

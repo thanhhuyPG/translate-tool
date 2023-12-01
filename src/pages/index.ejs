@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Translate Tools</title>
+    <script src="./lib/htmx.js"></script>
+    <script src="./lib/tailwind.js"></script>
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/tailwind.css" />
+  </head>
+  <body>
+    <div class="container mx-auto max-w-5xl my-8">
+      <form
+        hx-post="/translate"
+        enctype="multipart/form-data"
+        hx-target="#json-results"
+        hx-swap="afterbegin"
+        hx-swap-oob="true"
+        class="max-w-md mx-auto"
+        hx-indicator="#loading"
+        hx-reset-on-success="true"
+        hx-on::after-request="this.reset()"
+      >
+        <div class="text-center">
+          <!-- <h1>Excel to JSON</h1>
+          <p>using internal</p> -->
+        </div>
+        <div>
+          <div>
+            <label for="file">File Excel (*.xlxs)</label>
+            <input
+              type="file"
+              name="file"
+              id="file"
+              required
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              class="block w-full border cursor-pointer py-2 px-4 outline-none focus:border-sky-200 border-gray-300"
+            />
+          </div>
+        </div>
+        <div>
+          <div>
+            <label for="quantity">Quantity of language</label>
+            <input
+              type="number"
+              min="1"
+              max="20"
+              name="quantity"
+              id="quantity"
+              required
+              class="block w-full border cursor-pointer py-2 px-4 outline-none focus:border-sky-200 border-gray-300"
+            />
+          </div>
+        </div>
+        <button
+          class="bg-slate-200 rounded-md w-full font-medium text-center py-2 mt-4 hover:-translate-y-1 duration-300 active:opacity-60 active:scale-90"
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+      <div id="json-results" class="mx-auto max-w-5xl">
+        <div id="loading" class="htmx-indicator">
+          <svg
+            class="animate-spin mx-auto my-12"
+            xmlns="http://www.w3.org/2000/svg"
+            width="40"
+            height="40"
+            fill="#000000"
+            viewBox="0 0 256 256"
+          >
+            <path
+              d="M232,128a104,104,0,0,1-208,0c0-41,23.81-78.36,60.66-95.27a8,8,0,0,1,6.68,14.54C60.15,61.59,40,93.27,40,128a88,88,0,0,0,176,0c0-34.73-20.15-66.41-51.34-80.73a8,8,0,0,1,6.68-14.54C208.19,49.64,232,87,232,128Z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
