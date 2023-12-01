@@ -17,7 +17,6 @@ app.use(bodyParser.raw());
 app.use(fileUpload());
 
 app.get("/", async (req: Request, res: Response) => {
-  console.log("aaaaaaaaaaaaaa: ", path.join(__dirname + "/index"));
   return res.render("index");
 });
 
