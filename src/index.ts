@@ -21,5 +21,5 @@ app.get("/", async (req: Request, res: Response) => {
 app.post("/translate", TranslateControllers.translate);
 
 app.listen(3060, () => {
-  console.log(`Server is running at http://localhost:${3060}`);
+  console.log("Server is running at http://localhost:3060");
 });
