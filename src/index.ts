@@ -6,8 +6,6 @@ import path from "path";
 
 const app: Application = express();
 
-const port: number = 3060;
-
 app.use(express.static(path.join(__dirname, "/pages")));
 app.set("views", path.join(__dirname, "pages"));
 app.set("view engine", "ejs");
@@ -22,6 +20,6 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.post("/translate", TranslateControllers.translate);
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+app.listen(3060, () => {
+  console.log(`Server is running at http://localhost:${3060}`);
 });
