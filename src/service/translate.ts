@@ -20,7 +20,7 @@ const JSONparser = async (quantity: number, file?: any) => {
           await workbook.xlsx.load(excelData);
           const worksheet = workbook.getWorksheet(1);
           var data: any[] = [];
-          worksheet.eachRow({ includeEmpty: true }, async (row, rowIndex) => {
+          worksheet.eachRow({ includeEmpty: true }, (row, rowIndex) => {
             if (rowIndex === 1) {
               for (let index = 0; index < quantity; index++) {
                 data.push({
@@ -30,7 +30,7 @@ const JSONparser = async (quantity: number, file?: any) => {
               }
             } else {
               for (let index = 0; index < quantity; index++) {
-                const columnKey = await row
+                const columnKey = row
                   .getCell(1)
                   .value?.toString()
                   .toLowerCase()
