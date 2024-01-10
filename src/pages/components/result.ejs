@@ -53,8 +53,12 @@
           <% Object.entries(result).forEach(function([key, value], index) { %>
           <li>
             <!--  -->
-            <span class="text-sky-600"><%= JSON.stringify(key) %>: </span>
-            <span class="text-yellow-600"><%= JSON.stringify(value) %></span>
+            <span class="break-all text-sky-600"
+              ><%= JSON.stringify(key) %>:
+            </span>
+            <span class="break-all text-yellow-600"
+              ><%= JSON.stringify(value) %></span
+            >
             <!--  -->
             <% if (index < Object.keys(result).length - 1) { %>,<% } %>
           </li>
