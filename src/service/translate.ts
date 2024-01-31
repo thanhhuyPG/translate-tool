@@ -20,45 +20,42 @@ const JSONparser = async (quantity: number, file?: any) => {
           await workbook.xlsx.load(excelData);
           const worksheet = workbook.getWorksheet(1);
           var data: any[] = [];
-          worksheet.eachRow({ includeEmpty: true }, (row, rowIndex) => {
-            if (rowIndex === 1) {
-              for (let index = 0; index < quantity; index++) {
-                data.push({
-                  lang: row.getCell(index + 1).value as string,
-                  data: [],
-                });
+          worksheet.eachRow(
+            { includeEmpty: true },
+            (row: any, rowIndex: number) => {
+              if (rowIndex === 1) {
+                for (let index = 0; index < quantity; index++) {
+                  data.push({
+                    lang: row.getCell(index + 1).value as string,
+                    data: [],
+                  });
+                }
+              } else {
+                for (let index = 0; index < quantity; index++) {
+                  const columnKey = row.getCell(1).value?.toString();
+                  const columnData = row.getCell(index + 1).value;
+                  data[index].data = {
+                    ...data[index].data,
+                    [columnKey as string]: columnData,
+                  };
+                }
               }
-            } else {
-              for (let index = 0; index < quantity; index++) {
-                const columnKey = row
-                  .getCell(1)
-                  .value?.toString()
-                  .toLowerCase()
-                  .replaceAll(".", "")
-                  .replaceAll(",", "")
-                  .replaceAll(" ", "_");
-                const columnData = row.getCell(index + 1).value;
-                data[index].data = {
-                  ...data[index].data,
-                  [columnKey as string]: columnData,
-                };
-              }
+              // const columnAValue = row.getCell(1).value;
+              // const columnBValue = row.getCell(2).value;
+              // const columnCValue = row.getCell(3).value;
+              // const columnDValue = row.getCell(4).value;
+              // const columnEValue = row.getCell(5).value;
+              // const columnFValue = row.getCell(6).value;
+              // const columnGValue = row.getCell(7).value;
+              // englishData.push(columnAValue);
+              // korea.push(columnBValue);
+              // vietnamese.push(columnCValue);
+              // japan.push(columnDValue);
+              // china.push(columnEValue);
+              // spain.push(columnFValue);
+              // portual.push(columnGValue);
             }
-            // const columnAValue = row.getCell(1).value;
-            // const columnBValue = row.getCell(2).value;
-            // const columnCValue = row.getCell(3).value;
-            // const columnDValue = row.getCell(4).value;
-            // const columnEValue = row.getCell(5).value;
-            // const columnFValue = row.getCell(6).value;
-            // const columnGValue = row.getCell(7).value;
-            // englishData.push(columnAValue);
-            // korea.push(columnBValue);
-            // vietnamese.push(columnCValue);
-            // japan.push(columnDValue);
-            // china.push(columnEValue);
-            // spain.push(columnFValue);
-            // portual.push(columnGValue);
-          });
+          );
           resolve(data);
           // resolve({
           //   englishData: englishData.reduce(
