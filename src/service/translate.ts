@@ -28,7 +28,7 @@ const JSONparser = async (quantity: number, file?: any) => {
                   data.push({
                     lang: row
                       .getCell(index + 1)
-                      .value.toString()
+                      .value?.toString()
                       .trim() as string,
                     data: [],
                   });
