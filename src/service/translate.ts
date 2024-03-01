@@ -26,14 +26,20 @@ const JSONparser = async (quantity: number, file?: any) => {
               if (rowIndex === 1) {
                 for (let index = 0; index < quantity; index++) {
                   data.push({
-                    lang: row.getCell(index + 1).value as string,
+                    lang: row
+                      .getCell(index + 1)
+                      .value.toString()
+                      .trim() as string,
                     data: [],
                   });
                 }
               } else {
                 for (let index = 0; index < quantity; index++) {
-                  const columnKey = row.getCell(1).value?.toString();
-                  const columnData = row.getCell(index + 1).value;
+                  const columnKey = row.getCell(1).value?.toString().trim();
+                  const columnData = row
+                    .getCell(index + 1)
+                    .value?.toString()
+                    .trim();
                   data[index].data = {
                     ...data[index].data,
                     [columnKey as string]: columnData,
