@@ -1,5 +1,18 @@
 import ExcelJS from "exceljs";
 
+const formatKey = (text?: string) => {
+  // Define the list of characters to remove
+  const specialCharacters: string[] = [";", ",", '"', "?", "/", "."];
+
+  // Use the Array.reduce method to iterate through each character in the input string
+  const resultString = specialCharacters.reduce((acc, char) => {
+    // Replace the current special character with an empty string
+    return acc?.replace(new RegExp(char, "g"), "");
+  }, text);
+
+  return resultString?.toLowerCase();
+};
+
 const JSONparser = async (quantity: number, file?: any) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -18,7 +31,7 @@ const JSONparser = async (quantity: number, file?: any) => {
           const excelData = file.data;
           const workbook = new ExcelJS.Workbook();
           await workbook.xlsx.load(excelData);
-          const worksheet = workbook.getWorksheet(1);
+          const worksheet = workbook.getWorksheet("Sheet1");
           var data: any[] = [];
           worksheet.eachRow(
             { includeEmpty: true },
@@ -35,7 +48,20 @@ const JSONparser = async (quantity: number, file?: any) => {
                 }
               } else {
                 for (let index = 0; index < quantity; index++) {
-                  const columnKey = row.getCell(1).value?.toString().trim();
+                  const columnKey = row
+                    .getCell(1)
+                    .value?.toString()
+                    .trim()
+                    .trim()
+                    .toLowerCase()
+                    .replaceAll(".", "_")
+                    .replaceAll(",", "_")
+                    .replaceAll("/", "_")
+                    .replaceAll('"', "_")
+                    .replaceAll(":", "_")
+                    .replaceAll(";", "_")
+                    .replaceAll(" ", "_")
+                    .replaceAll("\n", "");
                   const columnData = row
                     .getCell(index + 1)
                     .value?.toString()
